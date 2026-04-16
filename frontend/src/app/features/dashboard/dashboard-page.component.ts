@@ -44,7 +44,11 @@ export class DashboardPageComponent {
   });
 
   constructor() {
-    this.realtimeService.connect(() => this.refreshTasks());
+    this.realtimeService.connect({
+      onTaskCreated: () => this.refreshTasks(),
+      onTaskUpdated: () => this.refreshTasks(),
+      onTaskDeleted: () => this.refreshTasks(),
+    });
     this.destroyRef.onDestroy(() => { this.realtimeService.disconnect() });
     this.loadDashboard();
   }
